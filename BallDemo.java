@@ -22,6 +22,24 @@ public class BallDemo
     {
         myCanvas = new Canvas("Ball Demo", 600, 500);
     }
+    
+    public void boxBounce()
+    {
+     int ground = 550;
+     int roof = 50;
+     int wallL = 50;
+     int wallR = 550;
+   
+     myCanvas.setVisible(true);
+     
+     myCanvas.drawLine(wallL, ground, wallR, ground);
+     myCanvas.drawLine(wallL, roof, wallR, roof);
+     myCanvas.drawLine(wallL, roof, wallL, ground);
+     myCanvas.drawLine(wallR, roof, wallR, ground);
+     
+     
+     
+    }
 
     /**
      * Simulate two bouncing balls

@@ -1,0 +1,104 @@
+import java.awt.*;
+import java.awt.geom.*;
+import java.util.Random;
+/**
+ * Makes a ball that bounces around the canvas.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class boxBall
+{
+    // instance variables - replace the example below with your own
+    private Ellipse2D.Double circle;
+    private Color color;
+    private int diameter;
+    private int xPos;
+    private int yPos;
+    private final int roof;      // y position of ground
+    private final int ground;      // y position of ground
+    private final int wallL;      // y position of ground
+    private final int wallR;      // y position of ground
+    private Canvas canvas;
+    private int ySpeed;                // initial downward speed
+    private int xSpeed; 
+    private Random rnd = new Random();
+    /**
+     * Constructor for objects of class boxBall
+     */
+    public boxBall(int top, int bottom, int left, int right, Color ballColor, Canvas drawingCanvas)
+    {
+      Random speed = new Random();
+      
+      diameter = generateRandom(10,20);
+      xPos = generateRandom(60, (540 - diameter));
+      yPos = generateRandom(60, (440 - diameter));
+      roof = top;
+      ground = bottom;
+      wallL = left;
+      wallR = right;
+      color = ballColor;
+      canvas = drawingCanvas;
+      ySpeed = generateRandom(0,15) - 7;
+      if (ySpeed == 0)
+        ySpeed = generaterandom (0,15) - 7;
+      xSpeed = generateRandom(0,15) - 7;
+      if (xSpeed == 0)
+        xSpeed = generateRandom(0,15) - 7;
+    }
+    
+    /**
+     * Draw this ball at its current position onto the canvas.
+     **/
+    public void draw()
+    {
+        canvas.setForegroundColor(color);
+        canvas.fillCircle(xPos, yPos, diameter);
+    }
+    
+        /**
+     * Erase this ball at its current position.
+     **/
+    public void erase()
+    {
+        canvas.eraseCircle(xPos, yPos, diameter);
+    }   
+    
+        /**
+     * Move this ball according to its position and speed and redraw.
+     **/
+    public void move()
+    {
+        // remove from canvas at the current position
+        erase();
+            
+        // compute new position
+        yPos += ySpeed;
+        xPos += xSpeed;
+
+        // check if it has hit the ground
+        if(yPos >= (ground - diameter)) {
+            yPos = (int)(bottomWall - diameter);
+            ySpeed = -ySpeed;
+        }
+        if(yPos <= (roof)) {
+            yPos = (int)(roof);
+            ySpeed = -ySpeed;
+        }
+        }
+
+        // draw again at new position
+        draw();
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public int sampleMethod(int y)
+    {
+    
+    }
+}
