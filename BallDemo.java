@@ -1,5 +1,6 @@
 import java.awt.Color;
-
+import java.util.Random;
+import java.util.ArrayList;
 /**
  * Class BallDemo - a short demonstration showing animation with the 
  * Canvas class. 
@@ -7,14 +8,17 @@ import java.awt.Color;
  * @author Bill Crosbie
  * @version 2015-March-BB
  *
- * @author Michael Kölling and David J. Barnes
- * @version 2011.07.31
+ * @author alex Floyd
+ * @version 10/16/18
  */
 
 public class BallDemo   
 {
     private Canvas myCanvas;
-
+    ArrayList<BoxBall> balls = new ArrayList<>();
+    
+    
+    
     /**
      * Create a BallDemo object. Creates a fresh canvas and makes it visible.
      */
@@ -23,26 +27,51 @@ public class BallDemo
         myCanvas = new Canvas("Ball Demo", 600, 500);
     }
     
+    
+    
+    
+    /**
+     * 
+     */
     public void boxBounce()
     {
-     int ground = 550;
-     int roof = 50;
-     int wallL = 50;
-     int wallR = 550;
-   
-     myCanvas.setVisible(true);
-     
-     myCanvas.drawLine(wallL, ground, wallR, ground);
-     myCanvas.drawLine(wallL, roof, wallR, roof);
-     myCanvas.drawLine(wallL, roof, wallL, ground);
-     myCanvas.drawLine(wallR, roof, wallR, ground);
+     int ballCount = 5+((int) (Math.random() * ((30-5)+1)));
      
      
+       myCanvas.setVisible(true);
+      for(int i = 0; i < ballCount;i++)
+      {
+        //generate three random color values for ball colors
+        int r = (int)(Math.random()*256);
+        int g = (int)(Math.random()*256);
+        int b= (int)(Math.random()*256);
+        Color color = new Color(r, g, b);
+        //create a diameter for the ball
+        int d = 10+((int)(Math.random() * ((20 - 10) + 1)));
+        int xPos = new Random().nextInt(Math.abs(550));
+        int yPos = new Random().nextInt(Math.abs(550));
+        //call BoxBall to create an object with given info
+        balls.add(new BoxBall(xPos,yPos,d,color, myCanvas));
+        balls.get(i).draw();
+      }
+      
+      //for loop to move the balls
+             for(int i = 0; i < ballCount; i++)
+        {       if(ballCount>5)
+                {
+                    myCanvas.wait(2);
+                    balls.get(i).move();
+                }
+                if(ballCount<5)
+                   myCanvas.wait(7);
+                  balls.get(i).move();
+         }
+      }
      
-    }
+    
 
     /**
-     * Simulate two bouncing balls
+     * Simulate bouncing balls
      */
     public void bounce()
     {
@@ -59,7 +88,7 @@ public class BallDemo
         BouncingBall ball2 = new BouncingBall(70, 80, 20, Color.RED, ground, myCanvas);
         ball2.draw();
 
-        // make them bounce
+        //get them moving
         boolean finished =  false;
         while(!finished) {
             myCanvas.wait(50);           // small delay
